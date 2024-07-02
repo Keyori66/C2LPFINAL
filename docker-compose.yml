@@ -11,16 +11,24 @@ services:
       - 8080:8080
     depends_on:
       - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=cer3.settings
+      - DATABASE_URL=postgres://postgres:miau123.@db:5432/cer3
     
   db:
     container_name: cer3_db
-    image: postgres:14
+    image: postgres:13
     ports:
       - 5432:5432
     environment:
      POSTGRES_USER: postgres
      POSTGRES_DB: cer3
      POSTGRES_PASSWORD: miau123.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
 
 networks:
   default:

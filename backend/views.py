@@ -48,3 +48,17 @@ class CreateRandomNumber(generics.CreateAPIView):
         random_letter = random.choice(string.ascii_uppercase)
         # Guardar el número y la letra aleatorios en la base de datos
         serializer.save(number=random_number, letter=random_letter)
+
+def pokemon_view(request):
+    pokemons = list(Pokemon.objects.all())
+    random_pokemons = random.sample(pokemons, 2) if len(pokemons) >= 2 else pokemons
+
+    data = [{
+        'name': pokemon.name,
+        'pokedex_number': pokemon.pokedex_number,
+        'primary_type': pokemon.primary_type,
+        'secondary_type': pokemon.secondary_type or "N/A",
+        'url_image': pokemon.url_image  
+    } for pokemon in random_pokemons]
+
+    return JsonResponse(data, safe=False)

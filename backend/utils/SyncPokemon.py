@@ -1,11 +1,11 @@
 import requests
-
 import os, sys    
 
+sys.path.insert(0, '/app')
 current_path = os.path.abspath(os.path.dirname(__file__))
 current_path = current_path[:current_path.find(os.path.dirname(__file__))]
 sys.path.append(current_path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cer3.settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cer3.settings')
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
@@ -30,7 +30,7 @@ def obtener_datos_de_api(url):
 
 # URL de la API
 url_api = 'https://pokeapi.co/api/v2/pokemon?limit=151'
-# 'https://pokeapi.co/api/v2/pokemon/1'
+
 
 # Obtiene los datos de la API
 datos_recibidos = obtener_datos_de_api(url_api)
@@ -54,4 +54,7 @@ for pokemon in pokemons:
         secondary_type = secondary_type
     )
 
-    print(poke_db)
+    url_image = poke_data['sprites']['front_default'] 
+    poke_db.save()
+
+    #print(poke_db)
